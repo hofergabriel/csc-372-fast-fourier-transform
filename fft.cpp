@@ -6,10 +6,9 @@ const double PI = acos(-1);
 
 void fft(vector<cd> & a) {
     int n = a.size();
-    if (n == 1)
-        return;
+    if (n == 1) return;
 
-    vector<cd> a0(n / 2), a1(n / 2);
+    vector<cd> a0(n / 2), a1(n / 2); // change to left and right or E and D
     for (int i = 0; 2 * i < n; i++) {
         a0[i] = a[2*i];
         a1[i] = a[2*i+1];
@@ -17,17 +16,13 @@ void fft(vector<cd> & a) {
     fft(a0);
     fft(a1);
 
-    double ang = 2 * PI / n;
     cd w(1);
     for (int i = 0; 2 * i < n; i++) {
-        w = polar(1.0 , -1*i * 2 * PI / n);
+        w = polar(1.0 , -1*i * 2 * PI / n); // -1 * i (backwards)
         a[i] = a0[i] + w * a1[i];
         a[i + n/2] = a0[i] - w * a1[i];
     }
 }
-
-
-
 
 
 bool cmp(cd a, cd b){
