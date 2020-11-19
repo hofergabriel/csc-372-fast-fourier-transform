@@ -8,34 +8,36 @@ void fft(vector<cd> & a) {
   int n = a.size();
   if(n == 1) return;
 
-  vector<cd> a0(n/2), a1(n/2); // change to left and right or E and D
+  vector<cd> E(n/2), D(n/2); 
   for(int i=0; 2*i < n; i++) {
-    a0[i] = a[2*i];
-    a1[i] = a[2*i+1];
+    E[i] = a[2*i];
+    D[i] = a[2*i+1];
   }
-  fft(a0);
-  fft(a1);
+  fft(E);
+  fft(D);
 
   cd w(1);
   for(int i=0; 2*i < n; i++) {
-    w = polar(1.0 , -1*i * 2 * PI / n); // -1 * i (backwards)
-    a[i] = a0[i] + w * a1[i];
-    a[i + n/2] = a0[i] - w * a1[i];
+    w = polar(1.0 , -1*i * 2 * PI / n); 
+    a[i] = E[i] + w * D[i];
+    a[i + n/2] = E[i] - w * D[i];
   }
 }
 
-bool cmp(cd a, cd b){
-  return (a.real()*a.real() + a.imag()*a.imag()) >
-    (b.real()*b.real() + b.imag()*b.imag());
+bool cmp(pair<int,cd> a, pair<int,cd> b){
+  return (a.second.real()*a.second.real() + a.second.imag()*a.second.imag()) >
+    (b.second.real()*b.second.real() + b.second.imag()*b.second.imag());
 }
 
 void print_result(vector<cd> & a ){
+  cout<<setprecision(2)<<fixed;
   if(a.size()<=8) for(auto el: a) cout<<el<<endl;
-  return;
-  sort(a.begin(),a.end(),cmp); 
-  vector<pair<int,cd>> indexed(a.size());  
-  for(int i=0;i<a.size();i++) indexed[i]={i,a[i]};
-  for(auto el: indexed) cout<<el.first<<setw(10)<<el.second<<endl;
+  else {
+    vector<pair<int,cd>> indexed(a.size());  
+    for(int i=0;i<a.size();i++) indexed[i]={i,a[i]};
+    sort(indexed.begin(),indexed.end(),cmp); 
+    for(auto el: indexed) cout<<setw(10)<<left<<el.first<<el.second<<endl;
+  }
 }
 
 vector<cd> read_input(){
@@ -47,7 +49,7 @@ vector<cd> read_input(){
 
 int main(){
   vector<cd> v = read_input();
-  reverse(v.begin(),v.end()); // reads input backwards on the example basically
+  reverse(v.begin(),v.end()); // reverse the input
   fft(v);
   print_result(v);
   return 0;
