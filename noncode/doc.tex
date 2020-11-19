@@ -60,45 +60,62 @@
   n = 195
 \]
 
-\noindent \textbf{[2 points] What is $\varphi(n)$?} \\ 
+\noindent \textbf{[2 points] What is $\varphi(n)$?} 
 
-$\varphi $ is Euler's totient function.
 \[
-  \varphi(n) = 96
+  \varphi(n) = lcm(p-1,q-1) = 84
 \]
 
 \noindent \textbf{[2 points] Name an invalid $e$ for this problem.} \\
 
-$\lambda$ is Carmichael's function. 
-\[
-  \lambda(n) = 12
-\]
-\noindent $e$ must be in the range $ 1 < e < \lambda(n)$ and $ gcd(e,\lambda(n)) = 1 $.
+\noindent $e$ must be in the range $ 1 < e < \varphi(n)$ and $ gcd(e,\varphi(n)) = 1 $.
 So, an example of an invalid $e$ would be 4 since 
 \[
-  gcd(4,\lambda(195)) = 4
+  gcd(4,\varphi(195)) = 4
 \]
 
 \noindent \textbf{[6 points] What is d (you MUST show your work for credit)?} \\
 
-\noindent We want to find the modulo multiplicative-inverse of $e$ modulo $\lambda(n)$. 
-Fermat's Little Theorem:
+\noindent We want to find the modulo multiplicative-inverse of $e$ modulo $\varphi(n)$. 
+$\phi$ is euler's totient function. Fermat's Little Theorem:
 \[
-  e^{\lambda(n)-1} \ \equiv \ \ 1 \ (mod \ \lambda(n))
+  e^{\phi(\varphi(n))} \ \equiv \ \ 1 \ (mod \ \varphi(n))
 \]
 Multiply both sides by $a^{-1}$.
 \[
-  e^{\lambda(n)-2} \ \equiv \ \ e^{-1} \ (mod \ \lambda(n))
+  e^{\phi(\varphi(n))-1} \ \equiv \ \ e^{-1} \ (mod \ \varphi(n))
 \]
-Simplify.
+Since $e^{\phi(84)-2} \ mod \ 84 = 23$
 \[
-  1 \ \equiv \ \ e^{-1} \ (mod \ \lambda(n))
+  23 \ \equiv \ \ e^{-1} \ (mod \ \varphi(n))
 \]
-So $d = 1$. \\
+So $d = 23$. \\
 
 \noindent \textbf{[8 points] Use the above values to encode 5 with $e$ (use the MOD-Exp funtion
 and show the values for each iteration). You should only [show] the first 5 
 iterations rather than all $e$ interations.}
+
+The \textbf{Public Key: } (n = 195, e = 11). Encryption function: 
+\[
+  c(m) = m^{11} \ mod \ 195
+\]
+
+\[
+  11 \equiv 11^1 \ (mod 195)
+\]
+\[
+  121 \equiv 11^2 \ (mod 195)
+\]
+\[
+  161 \equiv 11^3 \ (mod 195)
+\]
+\[
+  16 \equiv 11^4 \ (mod 195)
+\]
+\[
+  176 \equiv 11^5 \ (mod 195)
+\]
+%------------------------------------------------------------------------------------------------
 
 \newpage
 \subsection*{Question 3}
