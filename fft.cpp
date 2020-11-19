@@ -43,7 +43,7 @@ vector<cd> read_input(){
   vector<cd> v;
   while(cin>>e1) v.push_back(e2 = e1 + 0i);
   reverse(v.begin(),v.end()); // reverse the input
-  while(__builtin_popcount(v.size())!=1) v.push_back(0);
+  while(__builtin_popcount(v.size())>1) v.push_back(0);
   return v;
 }
 
